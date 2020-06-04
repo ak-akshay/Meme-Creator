@@ -1,0 +1,44 @@
+.bg {
+    background-image: radial-gradient(circle 248px at center, #16d9e3 0%, #30c7ec 47%, #46aef7 100%);
+    min-height: 85vh;
+}
+.thumbnail {
+    width: auto;
+    height: 150px;
+}
+.img-thumbnail{
+    height: 200px;
+}
+.flex-box{
+    width: 80%;
+    display: inline-flex;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+}
+#forScroll::-webkit-scrollbar{
+    display: none;
+}
+.upload-div{
+    display: inline;
+    margin-left: 1.5em;
+}
+
+@media (max-width: 770px) {
+    .btn#prev, .btn#next {
+        display: none;
+    }
+    .flex-box {
+        width: 100%;
+    }
+    h1.display-3 {
+        font-size: 3em;
+    }
+    h2.display-4 {
+        font-size: 2em;
+    }
+    .upload-div{
+        display: block;
+        margin: 1em auto;
+    }
+}

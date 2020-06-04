@@ -1,0 +1,9 @@
+.bg {
+    background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
+    min-height: 85vh;
+    width: 100%;
+}
+
+#canvas{
+    border: 2px solid black;
+}

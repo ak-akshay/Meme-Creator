@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "meme-creator-c6435": {
+      "hosting": {
+        "meme-creator": [
+          "meme-creator-c6435"
+        ]
+      }
+    }
+  }
+}
