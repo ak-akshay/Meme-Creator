@@ -1,9 +1,8 @@
-import { Component, OnInit, SimpleChange } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import {fabric} from 'fabric';
 import { FormatService } from '../services/format.service';
-import { async } from 'rxjs/internal/scheduler/async';
 
 @Component({
   selector: 'app-workspace',
@@ -26,13 +25,7 @@ export class WorkspaceComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.formatName = params['name'];
-    }); 
-    // this.formatService.getFormatDetails(this.formatName).subscribe(res => {
-    //   this.formatFields = res[0].details.fields
-    //   this.coords = res[0].details.coords
-    //   console.log(this.formatFields)
-    //   console.log(this.coords)
-    // })
+    });
   }
 
   ngAfterViewInit(canvas) {
@@ -52,7 +45,6 @@ export class WorkspaceComponent implements OnInit {
         this.textboxes[i] = new fabric.Textbox( "Textbox"+(i+1) , { 
           fontSize: this.coords[i].fontsize,
           fill: this.coords[i].color,
-          // stroke: (this.coords[i].color != "black") ? "white" : "black",
           strokeWidth: 1,
           left: this.coords[i].x, 
           top: this.coords[i].y,
@@ -76,7 +68,12 @@ export class WorkspaceComponent implements OnInit {
     this.canvas.renderAll()
   }
 
-  // ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
-  //   console.log('Somthing changed!')
-  // }
+  saveMeme() {
+    var link = document.createElement("a");
+
+    link.href = this.canvas.toDataURL({format: 'png', multiplier: 4});
+    link.download = "My-Meme.png";
+    link.click();
+  }
+  
 }
