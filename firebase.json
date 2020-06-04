@@ -2,6 +2,7 @@
   "hosting": [
     {
       "target": "meme-creator",
+      "site": "meme-creator",
       "public": "dist/meme-creator",
       "ignore": [
         "firebase.json",
