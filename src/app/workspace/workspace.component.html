@@ -1,4 +1,4 @@
-<div class="bg">
+<div>
     <!-- <a class="text-dark m-4" routerLink="/home" title="back">
         <svg class="bi bi-arrow-left-circle" width="3em" height="3em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
@@ -11,11 +11,11 @@
             <div class="col-md-7">
                 <!-- <app-canvas [formatName]="formatName" [text1]="text1"></app-canvas> -->
                 <canvas class="border-dark" id="canvas" height="440px" width="600px"></canvas>
-                <div class="text-center">
+                <div class="text-center m-3">
                     <button (click)="saveMeme()" class="btn btn-outline-light">Save Meme</button>
                 </div>
             </div>
-            <div class="col-md-5 text-light">
+            <div class="col-md-5 text-dark">
                 <h4>Guidelines</h4>
                 <ul>
                     <li>Drag to move textbox</li>
@@ -30,8 +30,11 @@
                 </div>
                 
                 <div *ngIf="formatFields != undefined">
-                    <form *ngFor="let tb of coords; let i = index" #updateForm="ngForm" (change)="updateCanvas(updateForm)">
-                        <fieldset class="border mt-3">
+                    <div class="w-100">
+                        <button class="btn btn-dark" (click)="addTextbox()">Add TextBox to canvas</button>
+                    </div>
+                    <form *ngFor="let tb of textboxes; let i = index" #updateForm="ngForm" (change)="updateCanvas(updateForm)">
+                        <fieldset class="border border-dark mt-3">
                             <legend >Textbox {{i+1}}</legend>
                             <input type="number" name="id" [ngModel]='id[i]' hidden>
                             <label class="ml-3" for="fill">Fill color:</label>      <!--  value="{{this.coords[i].color}}" -->
@@ -41,7 +44,7 @@
                             <label class="ml-3" for="stroke">Stroke width:</label>
                             <input ngModel type="range" name="tb_strokewidth" min="0" max="3" step="0.2">
                             <label class="ml-3" for="style">Font style:</label>
-                            <select ngModel name="style">
+                            <select [(ngModel)]="defaultStyle" name="style">
                                 <option value="Arial">Arial</option>
                                 <option value="Times New Roman">Times New Roman</option>
                                 <option value="Comic Sans MS">Comic Sans MS</option>
@@ -51,11 +54,6 @@
                     </form>
                 </div>
             </div>
-            <!-- <div class="col-md-1">
-                <div class="w-100">
-                    <button class="btn btn-secondary">Add TextBox to canvas</button>
-                </div>
-            </div> -->
         </div>
     </div>
 </div>

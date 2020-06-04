@@ -1,7 +1,3 @@
-.bg {
-    background-image: radial-gradient(circle 248px at center, #16d9e3 0%, #30c7ec 47%, #46aef7 100%);
-    min-height: 85vh;
-}
 .thumbnail {
     width: auto;
     height: 150px;
@@ -25,11 +21,14 @@
 }
 
 @media (max-width: 770px) {
+    .bg {
+        background-size: cover;
+    }
     .btn#prev, .btn#next {
         display: none;
     }
     .flex-box {
-        width: 100%;
+        width: 90%;
     }
     h1.display-3 {
         font-size: 3em;

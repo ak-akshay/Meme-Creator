@@ -17,6 +17,7 @@ export class WorkspaceComponent implements OnInit {
   text1:String=""
   textboxes = []
   id = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+  defaultStyle:String = "Times New Roman"
   canvas
 
   constructor(private route: ActivatedRoute, public formatService: FormatService) { }
@@ -34,6 +35,7 @@ export class WorkspaceComponent implements OnInit {
     fabric.Image.fromURL('assets/formats/'+this.formatName+'.png', function(oImg) {
       canvas.setDimensions({width: oImg.get('width'), height: oImg.get('height')});
       canvas.setBackgroundImage(oImg);
+      canvas.set('selection', false)
     });
 
     this.formatService.getFormatDetails(this.formatName).subscribe(res => {
@@ -48,7 +50,7 @@ export class WorkspaceComponent implements OnInit {
           strokeWidth: 1,
           left: this.coords[i].x, 
           top: this.coords[i].y,
-          fontFamily: "Times New Roman" 
+          fontFamily: this.defaultStyle
         });
         canvas.add(this.textboxes[i]);
       }
@@ -56,6 +58,24 @@ export class WorkspaceComponent implements OnInit {
     this.canvas = canvas
   }
   
+  addTextbox() {
+    let i = this.textboxes.length
+    if(i > 9) {
+      window.alert('You cannot add anymore textboxes!')
+    }
+    else {
+      this.textboxes[i] = new fabric.Textbox( "Textbox"+(i+1) , { 
+        fontSize: 30,
+        fill: "black",
+        strokeWidth: 1,
+        left: 100, 
+        top: 100,
+        fontFamily: "Times New Roman" 
+      });
+      this.canvas.add(this.textboxes[i])
+    }
+  }
+
   updateCanvas(updateForm:NgForm) {
     // console.log(updateForm.form.controls)
     let i:number = updateForm.form.controls.id.value
