@@ -8,7 +8,7 @@
     </a> -->
     <div class="container-xl m-0">
         <div class="row">
-            <div class="col-md-7">
+            <div class="col-lg-7 ml-0">
                 <div class="text-center m-3">
                     <button (click)="saveMeme()" class="btn btn-outline-light font-weight-bold">Save Meme</button>
                 </div>
@@ -61,6 +61,12 @@
                                 <option value="Roboto Mono" style="font-family: 'Roboto Mono', monospace;">Roboto Mono</option>
                                 <option value="Times New Roman">Times New Roman</option>
                             </select>
+                            <button class="btn btn-danger rounded-circle ml-5" title="Remove Textbox" (click)="removeTextbox()">
+                                <svg class="bi bi-x" width="1.5em" height="1.7em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M11.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708l7-7a.5.5 0 0 1 .708 0z"/>
+                                    <path fill-rule="evenodd" d="M4.146 4.146a.5.5 0 0 0 0 .708l7 7a.5.5 0 0 0 .708-.708l-7-7a.5.5 0 0 0-.708 0z"/>
+                                </svg>
+                            </button>
                         </div>
                     </form>
 
@@ -74,12 +80,6 @@
                         </button>
                         <!-- <button class="btn btn-dark" (click)="addSticker()">Add Sticker</button> -->
                     </div>
-                    <!-- <button class="view-btn btn btn-dark rounded-circle" title="View Canvas" (click)="scrollToTop()">
-                        <svg class="bi bi-eye" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.134 13.134 0 0 0 1.66 2.043C4.12 11.332 5.88 12.5 8 12.5c2.12 0 3.879-1.168 5.168-2.457A13.134 13.134 0 0 0 14.828 8a13.133 13.133 0 0 0-1.66-2.043C11.879 4.668 10.119 3.5 8 3.5c-2.12 0-3.879 1.168-5.168 2.457A13.133 13.133 0 0 0 1.172 8z"/>
-                            <path fill-rule="evenodd" d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
-                        </svg>
-                    </button> -->
                 </div>
                 <h4 class="resp mt-3">Guidelines</h4>
                 <ul>
@@ -89,8 +89,6 @@
                     <li>Resize textbox diagonally to change font size</li>
                     <li>You can resize the textboxes horizonatlly as well as vertically</li>
                     <li>You can rotate the textboxes</li>
-                    <li>Leave a textbox empty if not required</li>
-                    <li>Zoom out for better view in small screens</li>
                     <li>Save your meme directly to your device in high resolution</li>
                 </ul>
             </div>

@@ -34,39 +34,66 @@ export class WorkspaceComponent implements OnInit {
     // ---------------------Initialising Canvas-----------------------------------
     canvas = new fabric.Canvas('canvas');
     fabric.Image.fromURL('assets/formats/'+this.formatName+'.png', function(oImg) {
-      // oImg.scale(0.8)
-      canvas.setDimensions({width: oImg.get('width'), height: oImg.get('height')});
-      canvas.setBackgroundImage(oImg);
+      if(window.screen.width > 630) {
+        canvas.setDimensions({width: oImg.get('width'), height: oImg.get('height')});
+        canvas.setBackgroundImage(oImg);
+      } else if(window.screen.width > 520) {
+        oImg.scale(0.7)
+        canvas.setDimensions({width: oImg.get('width')*0.7, height: oImg.get('height')*0.7});
+        canvas.setBackgroundImage(oImg);
+      } else {
+        oImg.scale(0.47)
+        canvas.setDimensions({width: oImg.get('width')*0.47, height: oImg.get('height')*0.47});
+        canvas.setBackgroundImage(oImg);
+      }
       canvas.set('selection', false);
       canvas.set('allowTouchScrolling', true);
     });
+    if(window.screen.width > 630) {
+      this.formatService.getFormatDetails(this.formatName).subscribe(res => {
+        this.formatFields = res[0].details.fields
+        this.coords = res[0].details.coords
 
-    this.formatService.getFormatDetails(this.formatName).subscribe(res => {
-      this.formatFields = res[0].details.fields
-      this.coords = res[0].details.coords
-
-      // ---------------coords format:    [ (0)[color, fontsize, x, y], (1)[color, fontsize, x, y], ... ]
-      for( let i:number = 0; i < this.formatFields; i++) {
-        this.id.push(i)
-        this.textboxes[i] = new fabric.Textbox( "Textbox"+(i+1) , { 
-          fontSize: this.coords[i].fontsize,
-          fill: this.coords[i].color,
-          strokeWidth: 1,
-          left: this.coords[i].x, 
-          top: this.coords[i].y,
-          fontFamily: this.defaultStyle,
-          borderColor: this.coords[i].color,
-          cornerColor: this.coords[i].color,
-          cornerSize: 15,
-          cornerStyle: "circle"
-        });
-        this.textboxes[i].on('selected', function() {
-          globalThis.selectedId = i
-          console.log(globalThis.selectedId)
-        })
-        canvas.add(this.textboxes[i]);
-      }
-    })
+        // ---------------coords format:    [ (0)[color, fontsize, x, y], (1)[color, fontsize, x, y], ... ]
+        for( let i:number = 0; i < this.formatFields; i++) {
+          this.id.push(i)
+          this.textboxes[i] = new fabric.Textbox( "Textbox"+(i+1) , { 
+            fontSize: this.coords[i].fontsize,
+            fill: this.coords[i].color,
+            strokeWidth: 1,
+            left: this.coords[i].x, 
+            top: this.coords[i].y,
+            fontFamily: this.defaultStyle,
+            borderColor: this.coords[i].color,
+            cornerColor: this.coords[i].color,
+            cornerSize: 15,
+            cornerStyle: "circle"
+          });
+          this.textboxes[i].on('selected', function() {
+            globalThis.selectedId = i
+          })
+          canvas.add(this.textboxes[i]);
+        }
+      })
+    } else {
+      this.textboxes[0] = new fabric.Textbox( "Textbox1", {
+        fontSize: 30,
+        fill: "black",
+        strokeWidth: 1,
+        left: 80, 
+        top: 80,
+        fontFamily: this.defaultStyle,
+        borderColor: "black",
+        cornerColor: "black",
+        cornerSize: 15,
+        cornerStyle: "circle"
+      })
+      this.textboxes[0].on('selected', function() {
+        globalThis.selectedId = 0
+      })
+      canvas.add(this.textboxes[0]);
+    }
+    this.formatFields = 1
     this.canvas = canvas
   }
   
@@ -90,11 +117,17 @@ export class WorkspaceComponent implements OnInit {
         cornerStyle: "circle"
       });
       this.textboxes[i].on('selected', function() {
-        this.selectedId = i
-        console.log(this.selectedId)
+        globalThis.selectedId = i
       })
       this.canvas.add(this.textboxes[i])
     }
+  }
+
+  removeTextbox() {
+    let i:number = (globalThis.selectedId == undefined) ? 0 : globalThis.selectedId
+    this.canvas.remove(this.textboxes[i])
+    this.textboxes[i].splice(i, 1)
+    this.canvas.renderAll()
   }
 
   updateCanvas(updateForm:NgForm) {
