@@ -71,14 +71,14 @@ export class WorkspaceComponent implements OnInit {
     }
     else {
       this.textboxes[i] = new fabric.Textbox( "Textbox"+(i+1) , { 
-        fontSize: 30,
+        fontSize: 50,
         fill: "black",
         strokeWidth: 1,
-        left: 100, 
-        top: 100,
+        left: 180, 
+        top: 180,
         fontFamily: "Times New Roman",
-        borderColor: this.coords[i].color,
-        cornerColor: this.coords[i].color,
+        borderColor: "black",
+        cornerColor: "black",
         cornerSize: 15,
         cornerStyle: "circle"
       });
@@ -94,6 +94,8 @@ export class WorkspaceComponent implements OnInit {
       this.textboxes[i].set('stroke', updateForm.form.controls.tb_stroke.value)
       this.textboxes[i].set('strokeWidth', updateForm.form.controls.tb_strokewidth.value)
       this.textboxes[i].set('fontFamily', (updateForm.form.controls.style.value == "") ? "Times New Roman" : updateForm.form.controls.style.value)
+      this.textboxes[i].set('borderColor', (updateForm.form.controls.tb_fill.value == "") ? this.coords[i].color : updateForm.form.controls.tb_fill.value)
+      this.textboxes[i].set('cornerColor', (updateForm.form.controls.tb_fill.value == "") ? this.coords[i].color : updateForm.form.controls.tb_fill.value)
     // }
     this.canvas.renderAll()
   }
