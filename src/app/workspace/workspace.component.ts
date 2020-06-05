@@ -76,7 +76,11 @@ export class WorkspaceComponent implements OnInit {
         strokeWidth: 1,
         left: 100, 
         top: 100,
-        fontFamily: "Times New Roman" 
+        fontFamily: "Times New Roman",
+        borderColor: this.coords[i].color,
+        cornerColor: this.coords[i].color,
+        cornerSize: 15,
+        cornerStyle: "circle"
       });
       this.canvas.add(this.textboxes[i])
     }
