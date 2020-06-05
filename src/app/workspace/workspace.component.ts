@@ -16,7 +16,8 @@ export class WorkspaceComponent implements OnInit {
   coords = []
   text1:String=""
   textboxes = []
-  id = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+  id = []
+  selectedId:number = 0
   defaultStyle:String = "Times New Roman"
   canvas
 
@@ -46,6 +47,7 @@ export class WorkspaceComponent implements OnInit {
 
       // ---------------coords format:    [ (0)[color, fontsize, x, y], (1)[color, fontsize, x, y], ... ]
       for( let i:number = 0; i < this.formatFields; i++) {
+        this.id.push(i)
         this.textboxes[i] = new fabric.Textbox( "Textbox"+(i+1) , { 
           fontSize: this.coords[i].fontsize,
           fill: this.coords[i].color,
@@ -58,6 +60,10 @@ export class WorkspaceComponent implements OnInit {
           cornerSize: 15,
           cornerStyle: "circle"
         });
+        this.textboxes[i].on('selected', function() {
+          globalThis.selectedId = i
+          console.log(globalThis.selectedId)
+        })
         canvas.add(this.textboxes[i]);
       }
     })
@@ -66,6 +72,7 @@ export class WorkspaceComponent implements OnInit {
   
   addTextbox() {
     let i = this.textboxes.length
+    this.id.push(i)
     if(i > 9) {
       window.alert('You cannot add anymore textboxes!')
     }
@@ -79,24 +86,30 @@ export class WorkspaceComponent implements OnInit {
         fontFamily: "Times New Roman",
         borderColor: "black",
         cornerColor: "black",
-        cornerSize: 15,
+        cornerSize: 18,
         cornerStyle: "circle"
       });
+      this.textboxes[i].on('selected', function() {
+        this.selectedId = i
+        console.log(this.selectedId)
+      })
       this.canvas.add(this.textboxes[i])
     }
   }
 
   updateCanvas(updateForm:NgForm) {
     // console.log(updateForm.form.controls)
-    let i:number = updateForm.form.controls.id.value
-    // for( let i:number = 0; i < this.formatFields; i++ ) {
-      this.textboxes[i].set('fill', (updateForm.form.controls.tb_fill.value == "") ? this.coords[i].color : updateForm.form.controls.tb_fill.value)
-      this.textboxes[i].set('stroke', updateForm.form.controls.tb_stroke.value)
-      this.textboxes[i].set('strokeWidth', updateForm.form.controls.tb_strokewidth.value)
-      this.textboxes[i].set('fontFamily', (updateForm.form.controls.style.value == "") ? "Times New Roman" : updateForm.form.controls.style.value)
-      this.textboxes[i].set('borderColor', (updateForm.form.controls.tb_fill.value == "") ? this.coords[i].color : updateForm.form.controls.tb_fill.value)
-      this.textboxes[i].set('cornerColor', (updateForm.form.controls.tb_fill.value == "") ? this.coords[i].color : updateForm.form.controls.tb_fill.value)
-    // }
+    // console.log(globalThis.selectedId)
+    let i:number = (globalThis.selectedId == undefined) ? 0 : globalThis.selectedId
+
+    this.textboxes[i].set('fill', (updateForm.form.controls.tb_fill.value == "") ? this.coords[i].color : updateForm.form.controls.tb_fill.value)
+    this.textboxes[i].set('stroke', updateForm.form.controls.tb_stroke.value)
+    this.textboxes[i].set('strokeWidth', updateForm.form.controls.tb_strokewidth.value)
+    this.textboxes[i].set('fontFamily', (updateForm.form.controls.style.value == "") ? "Times New Roman" : updateForm.form.controls.style.value)
+    this.textboxes[i].set('borderColor', (updateForm.form.controls.tb_fill.value == "") ? this.coords[i].color : updateForm.form.controls.tb_fill.value)
+    this.textboxes[i].set('cornerColor', (updateForm.form.controls.tb_fill.value == "") ? this.coords[i].color : updateForm.form.controls.tb_fill.value)
+    this.textboxes[i].set('cornerSize', 18)
+
     this.canvas.renderAll()
   }
 
@@ -108,9 +121,9 @@ export class WorkspaceComponent implements OnInit {
     link.click();
   }
 
-  scrollToTop() {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
-  }
+  // scrollToTop() {
+  //   document.body.scrollTop = 0;
+  //   document.documentElement.scrollTop = 0;
+  // }
   
 }

@@ -2,45 +2,59 @@
     border: 2px solid black;
 }
 
+.form-div {
+    margin-top: 3em;
+    margin-bottom: 1em;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 1em;
+    border-radius: 6px;
+}
+
 label {
     font-size: 1.2em;
+    color: rgb(255, 255, 255);
     
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+	padding: 0;
+}
+input[type="color"]::-webkit-color-swatch {
+	border: none;
 }
 
 input[type="range"]::-webkit-slider-runnable-track  {
     background: rgb(253, 253, 253);
-    border-radius: 5px;
+    border-radius: 8px;
     border: 1px solid #000000;
 }
-
-input[type="range"]::-ms-thumb {
-    height: 26px;
-    width: 26px;
+/* input[type="range"]::-ms-thumb {
+    height: 20px;
+    width: 20px;
     border-radius: 10px;
     background: #ffffff;
     cursor: pointer;
-    margin-top: -8px;
-}
+    margin-top: -10px;
+} */
 
-.view-btn {
-    display: none;        
+.resp {
+    font-size: 1.2em;
 }
-
 @media (max-width: 770px) {
     .resp {
-        font-size: 2em;
+        font-size: 1.7em;
     }
     .resp label {
         font-size: 0.8em;
     }
-    .view-btn {
+    /* .view-btn {
         display: block;
         position: fixed;
         bottom: 2em;
         left: 15em;
         z-index: 50;
-    }
+    } */
     select {
-        font-size: 0.6em;
+        font-size: 0.5em;
     }
 }
