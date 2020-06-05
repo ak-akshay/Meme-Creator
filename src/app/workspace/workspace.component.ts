@@ -33,9 +33,11 @@ export class WorkspaceComponent implements OnInit {
     // ---------------------Initialising Canvas-----------------------------------
     canvas = new fabric.Canvas('canvas');
     fabric.Image.fromURL('assets/formats/'+this.formatName+'.png', function(oImg) {
+      // oImg.scale(0.8)
       canvas.setDimensions({width: oImg.get('width'), height: oImg.get('height')});
       canvas.setBackgroundImage(oImg);
-      canvas.set('selection', false)
+      canvas.set('selection', false);
+      canvas.set('allowTouchScrolling', true);
     });
 
     this.formatService.getFormatDetails(this.formatName).subscribe(res => {
@@ -50,7 +52,11 @@ export class WorkspaceComponent implements OnInit {
           strokeWidth: 1,
           left: this.coords[i].x, 
           top: this.coords[i].y,
-          fontFamily: this.defaultStyle
+          fontFamily: this.defaultStyle,
+          borderColor: this.coords[i].color,
+          cornerColor: this.coords[i].color,
+          cornerSize: 15,
+          cornerStyle: "circle"
         });
         canvas.add(this.textboxes[i]);
       }

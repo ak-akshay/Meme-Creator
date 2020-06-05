@@ -5,3 +5,22 @@
 label {
     font-size: 1.2em;
 }
+
+.view-btn {
+    display: none;        
+}
+
+@media (max-width: 770px) {
+    .resp {
+        font-size: 2em;
+    }
+    .resp label {
+        font-size: 0.8em;
+    }
+    .view-btn {
+        display: inline;
+        position: fixed;
+        bottom: 1em;
+        right: 1em;
+    }
+}

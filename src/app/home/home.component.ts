@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
     //------------------Getting formats' info from firebase---------------
     this.formatService.getFormats().subscribe(res=>{
       this.formats = res
-    })    
+    })
   }
 
   scrollLeft() {
