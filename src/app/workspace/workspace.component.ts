@@ -105,5 +105,10 @@ export class WorkspaceComponent implements OnInit {
     link.download = "My-Meme.png";
     link.click();
   }
+
+  scrollToTop() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
   
 }
