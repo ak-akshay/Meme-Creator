@@ -4,6 +4,22 @@
 
 label {
     font-size: 1.2em;
+    
+}
+
+input[type="range"]::-webkit-slider-runnable-track  {
+    background: rgb(253, 253, 253);
+    border-radius: 5px;
+    border: 1px solid #000000;
+}
+
+input[type="range"]::-ms-thumb {
+    height: 26px;
+    width: 26px;
+    border-radius: 10px;
+    background: #ffffff;
+    cursor: pointer;
+    margin-top: -8px;
 }
 
 .view-btn {
@@ -18,9 +34,13 @@ label {
         font-size: 0.8em;
     }
     .view-btn {
-        display: inline;
+        display: block;
         position: fixed;
-        bottom: 1em;
-        right: 1em;
+        bottom: 2em;
+        left: 15em;
+        z-index: 50;
+    }
+    select {
+        font-size: 0.6em;
     }
 }

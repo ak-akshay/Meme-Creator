@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap\dist\css\bootstrap.css";
+@import url('https://fonts.googleapis.com/css2?family=Acme&family=Anton&family=Architects+Daughter&family=Indie+Flower&family=Lexend+Tera&family=Lobster&family=Metal+Mania&family=Oswald:wght@500&family=Roboto+Mono:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Acme&family=Anton&family=Indie+Flower&family=Lobster&display=swap');
 
 .bg {
     background: radial-gradient(circle 248px at center, #16d9e3 0%, #30c7ec 47%, #46aef7 100%);

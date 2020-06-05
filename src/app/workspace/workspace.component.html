@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-md-7">
                 <div class="text-center m-3">
-                    <button (click)="saveMeme()" class="btn btn-outline-light">Save Meme</button>
+                    <button (click)="saveMeme()" class="btn btn-outline-light font-weight-bold">Save Meme</button>
                 </div>
                 <canvas class="border-dark" id="canvas" height="440px" width="600px"></canvas>
             </div>
@@ -31,34 +31,63 @@
                 
                 <div *ngIf="formatFields != undefined">
                     <div class="w-100">
-                        <button class="btn btn-dark" (click)="addTextbox()">Add TextBox</button>
+                        <button class="btn btn-dark" (click)="addTextbox()">
+                            <svg class="bi bi-plus" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"/>
+                                <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"/>
+                            </svg>
+                            Textbox
+                        </button>
                         <!-- <button class="btn btn-dark" (click)="addSticker()">Add Sticker</button> -->
                     </div>
                     <form *ngFor="let tb of textboxes; let i = index" #updateForm="ngForm" (change)="updateCanvas(updateForm)">
                         <fieldset class="border border-dark mt-3">
                             <legend >Textbox {{i+1}}</legend>
                             <input type="number" name="id" [ngModel]='id[i]' hidden>
-                            <label class="ml-3" for="fill">Fill color:</label>      <!--  value="{{this.coords[i].color}}" -->
-                            <input ngModel type="color" name="tb_fill"><br>
-                            <label class="ml-3" for="stroke">Stroke color:</label>
-                            <input ngModel type="color" name="tb_stroke"><br>
-                            <label class="ml-3" for="stroke">Stroke width:</label>
-                            <input ngModel type="range" name="tb_strokewidth" min="0" max="3" step="0.2"><br>
-                            <label class="ml-3" for="style">Font style:</label>
-                            <select [(ngModel)]="defaultStyle" name="style">
-                                <option value="Arial">Arial</option>
+                            <label for="fill">
+                                <svg class="bi bi-droplet-fill" width="1.5em" height="1.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M8 16a6 6 0 0 0 6-6c0-1.655-1.122-2.904-2.432-4.362C10.254 4.176 8.75 2.503 8 0c0 0-6 5.686-6 10a6 6 0 0 0 6 6zM6.646 4.646c-.376.377-1.272 1.489-2.093 3.13l.894.448c.78-1.559 1.616-2.58 1.907-2.87l-.708-.708z"/>
+                                </svg>
+                            </label>
+                            <input ngModel type="color" name="tb_fill">
+                            <label class="ml-5" for="stroke">
+                                <svg class="bi bi-brush" width="1.5em" height="1.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M15.213 1.018a.572.572 0 0 1 .756.05.57.57 0 0 1 .057.746C15.085 3.082 12.044 7.107 9.6 9.55c-.71.71-1.42 1.243-1.952 1.596-.508.339-1.167.234-1.599-.197-.416-.416-.53-1.047-.212-1.543.346-.542.887-1.273 1.642-1.977 2.521-2.35 6.476-5.44 7.734-6.411z"/>
+                                    <path d="M7 12a2 2 0 0 1-2 2c-1 0-2 0-3.5-.5s.5-1 1-1.5 1.395-2 2.5-2a2 2 0 0 1 2 2z"/>
+                                </svg>
+                            </label>
+                            <input ngModel type="color" name="tb_stroke">
+                            <label class="ml-5" for="stroke">
+                                <svg class="bi bi-slash" width="1.5em" height="1.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M11.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708l7-7a.5.5 0 0 1 .708 0z"/>
+                                </svg>
+                            </label>
+                            <input ngModel type="range" name="tb_strokewidth" min="0" max="3" step="0.2" style="color:crimson"><br>
+                            <label for="style">
+                                <svg class="bi bi-fonts" width="1.5em" height="1.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12.258 3H3.747l-.082 2.46h.479c.26-1.544.758-1.783 2.693-1.845l.424-.013v7.827c0 .663-.144.82-1.3.923v.52h4.082v-.52c-1.162-.103-1.306-.26-1.306-.923V3.602l.43.013c1.935.062 2.434.301 2.694 1.846h.479L12.258 3z"/>
+                                </svg>
+                            </label>
+                            <select ngModel={{defaultStyle}} name="style" class="text-justify">
+                                <option value="Acme" style="font-family: 'Acme', sans-serif;">Acme</option>
+                                <option value="Anton" style="font-family: 'Anton', sans-serif;">Anton</option>
+                                <option value="Architects Daughter" style="font-family: 'Architects Daughter', cursive;">Architects Daughter</option>
+                                <option value="Indie Flower" style="font-family: 'Indie Flower', cursive;">Indie Flower</option>
+                                <option value="Lexend Tera" style="font-family: 'Lexend Tera', sans-serif;">Lexend Tera</option>
+                                <option value="Lobster" style="font-family: 'Lobster', cursive;">Lobster</option>
+                                <option value="Metal Mania" style="font-family: 'Metal Mania', cursive;">Metal Mania</option>
+                                <option value="Oswald" style="font-family: 'Oswald', sans-serif;">Oswald</option>
+                                <option value="Roboto Mono" style="font-family: 'Roboto Mono', monospace;">Roboto Mono</option>
                                 <option value="Times New Roman">Times New Roman</option>
-                                <option value="Comic Sans MS">Comic Sans MS</option>
-                                <option value="Algerian">Algerian</option>
                             </select>
                         </fieldset>
                     </form>
-                    <!-- <div class="view-btn btn btn-outline-dark rounded-circle">
+                    <button class="view-btn btn btn-dark rounded-circle" title="View Canvas">
                         <svg class="bi bi-eye" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.134 13.134 0 0 0 1.66 2.043C4.12 11.332 5.88 12.5 8 12.5c2.12 0 3.879-1.168 5.168-2.457A13.134 13.134 0 0 0 14.828 8a13.133 13.133 0 0 0-1.66-2.043C11.879 4.668 10.119 3.5 8 3.5c-2.12 0-3.879 1.168-5.168 2.457A13.133 13.133 0 0 0 1.172 8z"/>
                             <path fill-rule="evenodd" d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
                         </svg>
-                    </div> -->
+                    </button>
                 </div>
             </div>
         </div>

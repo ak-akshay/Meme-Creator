@@ -5,6 +5,7 @@
 .img-thumbnail{
     height: 200px;
 }
+
 .flex-box{
     width: 80%;
     display: inline-flex;
@@ -15,9 +16,19 @@
 #forScroll::-webkit-scrollbar{
     display: none;
 }
+
 .upload-div{
     display: inline;
     margin-left: 1.5em;
+}
+
+.footer {
+    display: block;
+    background-color: white;
+    position: relative;
+    bottom: 0;
+    font-size: 1.5em;
+    font-weight: 400;
 }
 
 @media (max-width: 770px) {
