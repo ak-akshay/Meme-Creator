@@ -61,9 +61,16 @@ export class HomeComponent implements OnInit {
       this.isUploaded="success"
       console.log(this.path)
       this.image = this.storage.ref(this.path).getDownloadURL()
+      // this.showSrc()
     }).catch(err=>{
       console.log(err)
       this.isUploaded="fail"
     })
+  }
+
+  showSrc() {
+    var imgsrc = document.getElementById('image-element').getAttribute('src')
+    console.log(imgsrc)
+    this.formatService.setImgUrl(imgsrc)
   }
 }

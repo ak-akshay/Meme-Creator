@@ -7,6 +7,8 @@ import { map } from 'rxjs/operators';
 })
 export class FormatService {
 
+  imgUrl
+
   constructor(private db:AngularFirestore) { }
 
   getFormats() {
@@ -27,5 +29,9 @@ export class FormatService {
         return { id, ...data };
       }))
     ); 
+  }
+
+  setImgUrl(url) {
+    localStorage.setItem('url', url)
   }
 }

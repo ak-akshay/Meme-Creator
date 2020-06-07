@@ -33,23 +33,17 @@ export class WorkspaceComponent implements OnInit {
   ngAfterViewInit(canvas) {
     // ---------------------Initialising Canvas-----------------------------------
     canvas = new fabric.Canvas('canvas');
-    fabric.Image.fromURL('assets/formats/'+this.formatName+'.png', function(oImg) {
-      if(window.screen.width > 630) {
-        canvas.setDimensions({width: oImg.get('width'), height: oImg.get('height')});
-        canvas.setBackgroundImage(oImg);
-      } else if(window.screen.width > 520) {
-        oImg.scale(0.7)
-        canvas.setDimensions({width: oImg.get('width')*0.7, height: oImg.get('height')*0.7});
-        canvas.setBackgroundImage(oImg);
-      } else {
-        oImg.scale(0.47)
-        canvas.setDimensions({width: oImg.get('width')*0.47, height: oImg.get('height')*0.47});
-        canvas.setBackgroundImage(oImg);
-      }
+    var uploadedBool = (this.formatName == 'uploaded-img')
+    var imgUrl = (uploadedBool) ? localStorage.getItem('url') : 'assets/formats/'+this.formatName+'.png'
+    fabric.Image.fromURL(imgUrl, function(oImg) {
+      var num = (window.screen.width > 800) ? (0.45 * window.screen.width) : (0.9 * window.screen.width)
+      oImg.scaleToWidth(num, false)
+      canvas.setDimensions({width: oImg.getScaledWidth(), height: oImg.getScaledHeight()});
+      canvas.setBackgroundImage(oImg);
       canvas.set('selection', false);
       canvas.set('allowTouchScrolling', true);
     });
-    if(window.screen.width > 630) {
+    if(window.screen.width > 630 && !uploadedBool) {
       this.formatService.getFormatDetails(this.formatName).subscribe(res => {
         this.formatFields = res[0].details.fields
         this.coords = res[0].details.coords
@@ -80,8 +74,8 @@ export class WorkspaceComponent implements OnInit {
         fontSize: 30,
         fill: "black",
         strokeWidth: 1,
-        left: 80, 
-        top: 80,
+        left: 20, 
+        top: 20,
         fontFamily: this.defaultStyle,
         borderColor: "black",
         cornerColor: "black",
@@ -108,8 +102,8 @@ export class WorkspaceComponent implements OnInit {
         fontSize: 50,
         fill: "black",
         strokeWidth: 1,
-        left: 180, 
-        top: 180,
+        left: 10, 
+        top: 10,
         fontFamily: "Times New Roman",
         borderColor: "black",
         cornerColor: "black",

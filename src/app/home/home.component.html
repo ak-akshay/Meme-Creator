@@ -31,7 +31,7 @@
             </tr>
         </table>
         <h1 class="display-3 text-center">Uploading Image feature coming soon</h1>
-        <!-- <div class="">
+        <div class="">
             <h2 class="display-4 text-center text-light">Upload from your device</h2>
             <div class="d-block text-center">
                 <form #uploadForm="ngForm">
@@ -44,18 +44,18 @@
                     </button>
                     
                     <div class="upload-div" *ngIf="isUploaded=='success'">
-                        <img class="img-thumbnail" src="{{image | async}}" alt="Uploaded-image" onerror="this.src='assets/extras/loading.gif'">
+                        <img id="image-element" class="img-thumbnail" src="{{image | async}}" alt="Uploaded-image" onerror="this.src='assets/extras/loading.gif'">
                     </div>
                     <div class="d-inline" *ngIf="isUploaded=='process'">
                         <div class="spinner-border text-dark"></div>
                         <span class="lead text-dark">Uploading...</span>
                     </div>
                     <div class="text-center mt-4">
-                        <button class="btn btn-outline-light btn-lg" type="submit" [disabled]="!uploadForm.valid">Continue</button>
+                        <button (click)="showSrc()" routerLink="/workspace" [queryParams]="{ name: 'uploaded-img' }" class="btn btn-outline-light btn-lg" type="submit" [disabled]="isUploaded != 'success'">Continue</button>
                     </div>
                 </form>
             </div>
-        </div> -->
+        </div>
     </div>  
 </div>
 <div class="lead footer">
