@@ -53,24 +53,19 @@ export class HomeComponent implements OnInit {
   SelectFile(event){
     let file = event.target.files[0]
     let date = new Date()
-    let unique = '/user_format/'+ date.toString()
+    let unique = '/user_format/at'+ date.getTime()
     this.isUploaded="process"
     let task = this.storage.upload(unique,file).then(data=>{
-      console.log(data)
       this.path=unique
       this.isUploaded="success"
-      console.log(this.path)
       this.image = this.storage.ref(this.path).getDownloadURL()
-      // this.showSrc()
     }).catch(err=>{
       console.log(err)
       this.isUploaded="fail"
     })
   }
 
-  showSrc() {
-    var imgsrc = document.getElementById('image-element').getAttribute('src')
-    console.log(imgsrc)
-    this.formatService.setImgUrl(imgsrc)
+  setSrc() {
+    this.formatService.setImgUrl(this.path)
   }
 }

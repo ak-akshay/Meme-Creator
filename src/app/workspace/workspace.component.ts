@@ -14,10 +14,12 @@ export class WorkspaceComponent implements OnInit {
   formatName:String
   formatFields:Number
   coords = []
-  text1:String=""
   textboxes = []
   id = []
   selectedId:number = 0
+  defaultFill:String = "black"
+  defaultStroke:String = "white"
+  defaultStrokeWidth:number = 1
   defaultStyle:String = "Times New Roman"
   canvas
 
@@ -33,15 +35,16 @@ export class WorkspaceComponent implements OnInit {
   ngAfterViewInit(canvas) {
     // ---------------------Initialising Canvas-----------------------------------
     canvas = new fabric.Canvas('canvas');
+    canvas.set('selection', false);
+    canvas.set('allowTouchScrolling', true);
     var uploadedBool = (this.formatName == 'uploaded-img')
-    var imgUrl = (uploadedBool) ? localStorage.getItem('url') : 'assets/formats/'+this.formatName+'.png'
+    var imgUrl = (uploadedBool) ? 'https://storage.googleapis.com/meme-creator-c6435.appspot.com'+localStorage.getItem('url') : 'assets/formats/'+this.formatName+'.png'
     fabric.Image.fromURL(imgUrl, function(oImg) {
+      oImg.setCrossOrigin('');
       var num = (window.screen.width > 800) ? (0.45 * window.screen.width) : (0.9 * window.screen.width)
       oImg.scaleToWidth(num, false)
       canvas.setDimensions({width: oImg.getScaledWidth(), height: oImg.getScaledHeight()});
-      canvas.setBackgroundImage(oImg);
-      canvas.set('selection', false);
-      canvas.set('allowTouchScrolling', true);
+      canvas.setBackgroundImage(oImg, { crossOrigin: '' });
     });
     if(window.screen.width > 630 && !uploadedBool) {
       this.formatService.getFormatDetails(this.formatName).subscribe(res => {
@@ -54,7 +57,8 @@ export class WorkspaceComponent implements OnInit {
           this.textboxes[i] = new fabric.Textbox( "Textbox"+(i+1) , { 
             fontSize: this.coords[i].fontsize,
             fill: this.coords[i].color,
-            strokeWidth: 1,
+            stroke: this.defaultStroke,
+            strokeWidth: this.defaultStrokeWidth,
             left: this.coords[i].x, 
             top: this.coords[i].y,
             fontFamily: this.defaultStyle,
@@ -72,8 +76,9 @@ export class WorkspaceComponent implements OnInit {
     } else {
       this.textboxes[0] = new fabric.Textbox( "Textbox1", {
         fontSize: 30,
-        fill: "black",
-        strokeWidth: 1,
+        fill: this.defaultFill,
+        stroke: this.defaultStroke,
+        strokeWidth: this.defaultStrokeWidth,
         left: 20, 
         top: 20,
         fontFamily: this.defaultStyle,
@@ -100,14 +105,15 @@ export class WorkspaceComponent implements OnInit {
     else {
       this.textboxes[i] = new fabric.Textbox( "Textbox"+(i+1) , { 
         fontSize: 50,
-        fill: "black",
-        strokeWidth: 1,
+        fill: this.defaultFill,
+        stroke: this.defaultStroke,
+        strokeWidth: this.defaultStrokeWidth,
         left: 10, 
         top: 10,
         fontFamily: "Times New Roman",
-        borderColor: "black",
-        cornerColor: "black",
-        cornerSize: 18,
+        borderColor: this.defaultFill,
+        cornerColor: this.defaultFill,
+        cornerSize: 20,
         cornerStyle: "circle"
       });
       this.textboxes[i].on('selected', function() {
@@ -120,13 +126,10 @@ export class WorkspaceComponent implements OnInit {
   removeTextbox() {
     let i:number = (globalThis.selectedId == undefined) ? 0 : globalThis.selectedId
     this.canvas.remove(this.textboxes[i])
-    this.textboxes[i].splice(i, 1)
     this.canvas.renderAll()
   }
 
   updateCanvas(updateForm:NgForm) {
-    // console.log(updateForm.form.controls)
-    // console.log(globalThis.selectedId)
     let i:number = (globalThis.selectedId == undefined) ? 0 : globalThis.selectedId
 
     this.textboxes[i].set('fill', (updateForm.form.controls.tb_fill.value == "") ? this.coords[i].color : updateForm.form.controls.tb_fill.value)
@@ -142,15 +145,8 @@ export class WorkspaceComponent implements OnInit {
 
   saveMeme() {
     var link = document.createElement("a");
-
-    link.href = this.canvas.toDataURL({format: 'png', multiplier: 4});
+    link.href = this.canvas.toDataURL({format: 'png'});
     link.download = "My-Meme.png";
     link.click();
   }
-
-  // scrollToTop() {
-  //   document.body.scrollTop = 0;
-  //   document.documentElement.scrollTop = 0;
-  // }
-  
 }

@@ -34,7 +34,7 @@
             <h2 class="display-4 text-center text-light">Upload from your device</h2>
             <div class="d-block text-center">
                 <form #uploadForm="ngForm">
-                    <input (change)="SelectFile($event)" type="file" name="fileToUpload" id="uploadBtn" hidden required>
+                    <input (change)="SelectFile($event)" type="file" accept="image/*" name="fileToUpload" id="uploadBtn" hidden required>
                     <button class="btn border-dark" (click)="clickUpload()">
                         <svg class="bi bi-upload" width="3em" height="3em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M.5 8a.5.5 0 0 1 .5.5V12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8.5a.5.5 0 0 1 1 0V12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V8.5A.5.5 0 0 1 .5 8zM5 4.854a.5.5 0 0 0 .707 0L8 2.56l2.293 2.293A.5.5 0 1 0 11 4.146L8.354 1.5a.5.5 0 0 0-.708 0L5 4.146a.5.5 0 0 0 0 .708z"/>
@@ -49,8 +49,11 @@
                         <div class="spinner-border text-dark"></div>
                         <span class="lead text-dark">Uploading...</span>
                     </div>
+                    <div class="d-inline" *ngIf="isUploaded=='fail'">
+                        <span class="lead text-danger">Upload failed! Try again</span>
+                    </div>
                     <div class="text-center mt-4">
-                        <button (click)="showSrc()" routerLink="/workspace" [queryParams]="{ name: 'uploaded-img' }" class="btn btn-outline-light btn-lg" type="submit" [disabled]="isUploaded != 'success'">Continue</button>
+                        <button (click)="setSrc()" routerLink="/workspace" [queryParams]="{ name: 'uploaded-img' }" class="btn btn-outline-light btn-lg" type="submit" [disabled]="isUploaded != 'success'">Continue</button>
                     </div>
                 </form>
             </div>
