@@ -19,7 +19,7 @@ export class WorkspaceComponent implements OnInit {
   selectedId:number = 0
   defaultFill:String = "black"
   defaultStroke:String = "white"
-  defaultStrokeWidth:number = 1
+  defaultStrokeWidth:number = 0
   defaultStyle:String = "Times New Roman"
   canvas
 
@@ -38,7 +38,7 @@ export class WorkspaceComponent implements OnInit {
     canvas.set('selection', false);
     canvas.set('allowTouchScrolling', true);
     var uploadedBool = (this.formatName == 'uploaded-img')
-    var imgUrl = (uploadedBool) ? 'https://storage.googleapis.com/meme-creator-c6435.appspot.com'+localStorage.getItem('url') : 'assets/formats/'+this.formatName+'.png'
+    var imgUrl = (uploadedBool) ? 'https://storage.googleapis.com/meme-creator-c6435.appspot.com'+localStorage.getItem('path') : 'assets/formats/'+this.formatName+'.png'
     fabric.Image.fromURL(imgUrl, function(oImg) {
       oImg.setCrossOrigin('');
       var num = (window.screen.width > 800) ? (0.45 * window.screen.width) : (0.9 * window.screen.width)
@@ -64,7 +64,7 @@ export class WorkspaceComponent implements OnInit {
             fontFamily: this.defaultStyle,
             borderColor: this.coords[i].color,
             cornerColor: this.coords[i].color,
-            cornerSize: 15,
+            cornerSize: 20,
             cornerStyle: "circle"
           });
           this.textboxes[i].on('selected', function() {
@@ -132,21 +132,22 @@ export class WorkspaceComponent implements OnInit {
   updateCanvas(updateForm:NgForm) {
     let i:number = (globalThis.selectedId == undefined) ? 0 : globalThis.selectedId
 
-    this.textboxes[i].set('fill', (updateForm.form.controls.tb_fill.value == "") ? this.coords[i].color : updateForm.form.controls.tb_fill.value)
+    this.textboxes[i].set('fill', updateForm.form.controls.tb_fill.value)
     this.textboxes[i].set('stroke', updateForm.form.controls.tb_stroke.value)
     this.textboxes[i].set('strokeWidth', updateForm.form.controls.tb_strokewidth.value)
-    this.textboxes[i].set('fontFamily', (updateForm.form.controls.style.value == "") ? "Times New Roman" : updateForm.form.controls.style.value)
-    this.textboxes[i].set('borderColor', (updateForm.form.controls.tb_fill.value == "") ? this.coords[i].color : updateForm.form.controls.tb_fill.value)
-    this.textboxes[i].set('cornerColor', (updateForm.form.controls.tb_fill.value == "") ? this.coords[i].color : updateForm.form.controls.tb_fill.value)
-    this.textboxes[i].set('cornerSize', 18)
-
+    this.textboxes[i].set('fontFamily', updateForm.form.controls.style.value)
+    this.textboxes[i].set('borderColor', updateForm.form.controls.tb_fill.value)
+    this.textboxes[i].set('cornerColor', updateForm.form.controls.tb_fill.value)
     this.canvas.renderAll()
   }
 
   saveMeme() {
+    // Generating link for file download
     var link = document.createElement("a");
     link.href = this.canvas.toDataURL({format: 'png'});
     link.download = "My-Meme.png";
     link.click();
+    // Deleting file from storage
+    this.formatService.deleteFile(localStorage.getItem('path'))
   }
 }
