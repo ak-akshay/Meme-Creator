@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FormatService {
 
-  imgUrl
-
-  constructor(private db:AngularFirestore) { }
+  constructor(private db:AngularFirestore, private storage:AngularFireStorage) { }
 
   getFormats() {
     return this.db.collection('formats',ref=>ref).snapshotChanges().pipe(
@@ -31,7 +30,11 @@ export class FormatService {
     ); 
   }
 
-  setImgUrl(url) {
-    localStorage.setItem('url', url)
+  setImgUrl(path) {
+    localStorage.setItem('path', path)
+  }
+
+  deleteFile(path) {
+  this.storage.ref(path).delete()
   }
 }
