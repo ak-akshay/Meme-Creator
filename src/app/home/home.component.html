@@ -12,6 +12,7 @@
                     <path fill-rule="evenodd" d="M9.224 1.553a.5.5 0 0 1 .223.67L6.56 8l2.888 5.776a.5.5 0 1 1-.894.448l-3-6a.5.5 0 0 1 0-.448l3-6a.5.5 0 0 1 .67-.223z"/>
                 </svg>
             </button>
+            <!-- ---------Formats preview------------ -->
             <div class="flex-box"  id="forScroll">
                 <div *ngFor="let format of formats">
                     <a class="mx-1" routerLink="/workspace"  [queryParams]="{ name: format.name }"><img class="thumbnail border border-dark rounded" src="assets/formats/{{format.name}}.png" alt="{{format.name}}" title={{format.name}}></a>
@@ -23,6 +24,7 @@
                 </svg>
             </button>
         </div>
+        <!-- ----------Partition------- -->
         <table>
             <tr>
                 <td class="w-50"><hr class="border-dark"></td>
@@ -30,6 +32,7 @@
                 <td class="w-75"><hr class="border-dark"></td>
             </tr>
         </table>
+        <!-- ----------------Uploading file div---------- -->
         <div>
             <h2 class="display-4 text-center text-light">Upload from your device</h2>
             <div class="d-block text-center">
@@ -41,10 +44,11 @@
                             <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0v-8A.5.5 0 0 1 8 2z"/>
                         </svg>
                     </button>
-                    
+                    <!-- -----------File preview--------- -->
                     <div class="upload-div" *ngIf="isUploaded=='success'">
                         <img id="image-element" class="img-thumbnail" src="{{image | async}}" alt="Uploaded-image" onerror="this.src='assets/extras/loading.gif'">
                     </div>
+                    <!-- -----------Upload progress------------ -->
                     <div class="d-inline" *ngIf="isUploaded=='process'">
                         <div class="spinner-border text-dark"></div>
                         <span class="lead text-dark">Uploading...</span>
@@ -63,6 +67,7 @@
         </div>
     </div>  
 </div>
+<!-- -------------Credits------------------ -->
 <div class="lead footer">
     Created By: <a href="https://www.linkedin.com/in/akshay-khandelwal-8a4094158/" target="_blank">Akshay Khandelwal</a>
 </div>

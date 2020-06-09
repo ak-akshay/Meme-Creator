@@ -25,9 +25,9 @@ export class HomeComponent implements OnInit {
   //   {'name':'uno-draw-25-cards'}
   // ] 
 
-  isUploaded:any="none"    
-  path
-  image:any
+  isUploaded:any="none"       // To track upload progress   
+  path                        // To uploaded file on google cloud storage
+  image:any                   // Observable returned by storage for the uploaded file
 
   constructor(public formatService:FormatService, private storage:AngularFireStorage) { }
 
@@ -52,13 +52,13 @@ export class HomeComponent implements OnInit {
 
   SelectFile(event){
     let file = event.target.files[0]
-    let date = new Date()
-    let unique = '/user_format/at'+ date.getTime()
+    let date = new Date()                                               // Unique name for the file
+    let unique = '/user_format/at'+ date.getTime()                      // Saving in folder
     this.isUploaded="process"
     let task = this.storage.upload(unique,file).then(data=>{
-      this.path=unique
+      this.path=unique                                                  // Saving path to uploaded file
       this.isUploaded="success"
-      this.image = this.storage.ref(this.path).getDownloadURL()
+      this.image = this.storage.ref(this.path).getDownloadURL()         // Saving URL to image uploaded
     }).catch(err=>{
       console.log(err)
       this.isUploaded="fail"
@@ -66,6 +66,6 @@ export class HomeComponent implements OnInit {
   }
 
   setSrc() {
-    this.formatService.setImgUrl(this.path)
+    this.formatService.setImgUrl(this.path)           // Storing path of uploaded file on local storage
   }
 }
